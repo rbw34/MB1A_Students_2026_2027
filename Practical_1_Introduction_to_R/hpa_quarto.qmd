@@ -1,0 +1,25 @@
+---
+title: "Brain Summary"
+---
+
+in this document i will compare the total number of genes regionally elevated expression in different regions of the forebrain for human, pig and mouse.
+
+human
+```{r}
+total_elevated_human <- sum(180, 162, 83, 57)
+print(total_elevated_human)
+```
+
+pig
+```{r}
+total_elevated_pig <- sum(109, 165, 157, 31)
+print(total_elevated_pig)
+```
+
+mouse
+```{r}
+total_elevated_mouse <- sum(55, 182, 185, 60)
+print(total_elevated_mouse)
+```
+
+both mice and human have the highest number of genes with elevated expression, 482.
