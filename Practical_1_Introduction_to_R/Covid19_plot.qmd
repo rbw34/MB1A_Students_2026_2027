@@ -1,0 +1,27 @@
+---
+title: "Practical_1_Introduction_to_R/ukhsa_data_analysis.qmd"
+author: "Rachael Wilson"
+---
+
+```{r}
+library(tidyverse)
+library(gt)
+
+COVID <- read_csv("data/ukhsa-chart-download.csv")
+gt(head(COVID))
+
+rlang::last_trace()
+```
+
+```{r}
+ggplot(COVID, aes(
+  x = date,
+  y = metric_value
+)) +
+  geom_line(colour = "blue") +
+  xlab("Number of Cases") +
+  ylab("Year") +
+  ggtitle("Number of COVID cases per year")
+
+```
+

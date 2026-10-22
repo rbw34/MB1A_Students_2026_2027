@@ -36,3 +36,61 @@ print(class(x))
 ```
 
 
+```{r}
+library(tidyverse)
+library(gt)
+```
+creating variables:
+
+```{r}
+cell_id_1 <- "CX1"
+cell_id_2 <- "CX2"
+
+treated_1 <- "true"
+treated_2 <- "false"
+
+n_before1 <- "5415"
+n_before2 <- "8123"
+
+n_after1 <- "1432"
+n_after2 <- "7543"
+```
+
+```{r}
+cell_id_vec <- c(cell_id_1, cell_id_2)
+print(cell_id_vec)
+treated_vec <- c(treated_1, treated_2)
+print(treated_vec)
+n_before_vec <- c(n_before1, n_before2)
+print(n_before_vec)
+n_after_vec <- c(n_after1, n_after2)
+print(n_after_vec)
+
+```
+```{r}
+# for example
+all_my_pets <- c("dog", "horse", "guinea pig", "chicken", "cat")
+my_only_bird <- all_my_pets[4]
+print(my_only_bird)
+```
+
+
+```{r}
+my_data_frame <- tibble(
+  cell_ID = cell_id_vec,
+  treated = treated_vec,
+  num_cells_before = n_before_vec,
+  num_cells_after = n_after_vec
+)
+
+gt(my_data_frame)
+```
+
+```{r}
+weather <- read_csv("data/weather_data.csv")
+```
+
+```{r}
+gt(weather)
+```
+
