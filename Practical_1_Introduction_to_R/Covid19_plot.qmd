@@ -10,7 +10,6 @@ library(gt)
 COVID <- read_csv("data/ukhsa-chart-download.csv")
 gt(head(COVID))
 
-rlang::last_trace()
 ```
 
 ```{r}
