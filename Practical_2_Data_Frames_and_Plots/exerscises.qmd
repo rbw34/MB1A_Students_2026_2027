@@ -1,0 +1,20 @@
+---
+title: "practicaL2_exercises"
+---
+
+```{r}
+numbers <- c(5, -10, 4, -3)
+result <- numbers |>
+  mean() |>
+  abs() |>
+  round()
+print(result)
+```
+```{r}
+y <- 12
+y == 7
+y < 15
+y > 20
+y <= 12
+```
+
