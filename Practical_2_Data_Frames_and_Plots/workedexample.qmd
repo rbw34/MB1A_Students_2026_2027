@@ -55,4 +55,88 @@ gt(birds_breeding_exc)
 birds_migration_exc <- birds_migration_selected |> filter(Site != "Spain")
 gt(head(birds_migration_exc))
 ```
+```{r}
+bird_migration_grouped <- birds_migration_exc |> group_by(Site)
+
+bird_migration_summary <- bird_migration_grouped |> 
+  summarise(
+    Stopover_longitude = median(Stopover_longitude, na.rm = TRUE),
+    Stopover_latitude = median(Stopover_latitude, na.rm = TRUE),
+    Iberian_longitude = median(Iberian_longitude, na.rm = TRUE),
+    Iberian_latitude = median(Iberian_latitude, na.rm = TRUE),
+    Westmost_longitude = median(Westmost_longitude, na.rm = TRUE),
+    Westmost_latitude = median(Westmost_latitude, na.rm = TRUE),
+    Winter_longitude = median(Winter_longitude, na.rm = TRUE),
+    Winter_latitude = median(Winter_latitude, na.rm = TRUE)
+  )
+gt(bird_migration_summary)
+```
+
+```{r}
+combined_bird_data <- full_join(bird_migration_summary, birds_breeding_exc)
+gt(combined_bird_data)
+
+```
+```{r}
+combined_bird_piv <- combined_bird_data |>
+  pivot_longer(
+    cols = ends_with(c("_longitude", "_latitude")),
+    names_sep = "_",
+    names_to = c("Location_Type", ".value")
+    )
+  
+  
+gt(combined_bird_piv)
+```
+
+```{r}
+spring_values <- c("Breeding", "Stopover", "Winter")
+autumn_values <- c("Breeding", "Iberian", "Westmost", "Winter")
+spring_data <- combined_bird_piv |>
+  filter(Location_Type %in% spring_values)
+autumn_data <- combined_bird_piv |>
+  filter(Location_Type %in% autumn_values)
+
+write_csv(spring_data, "output/birds_spring.csv")
+write_csv(autumn_data, "output/birds_autumn.csv")
+gt(spring_data)
+```
+```{r}
+min_lon <- spring_data |>
+  pull(longitude) |>
+  min()
+
+print(min_lon)
+max_lon <- spring_data |>
+  pull(longitude) |>
+  max()
+
+print(max_lon)
+min_lat <- spring_data |>
+  pull(latitude) |>
+  min()
+
+print(min_lat)
+max_lat <- spring_data |>
+  pull(latitude) |>
+  max()
+
+print(max_lat)
+
+ggplot(
+  spring_data,
+  aes(x = longitude, y = latitude, colour = Site, shape=Location_Type)) +
+  geom_point(size=3) +
+  annotation_borders(linewidth = 0.2) +
+  coord_quickmap(
+    xlim = c(min_lon - 2, max_lon + 2),
+    ylim = c(min_lat - 2, max_lat +2)
+  ) +
+  geom_path(aes(group = Site)) +
+  ggtitle("Pied Flycatcher Spring Migration Routes") +
+  xlab("Longitude (°)") +
+  ylab("Latitude (°)") +
+  theme_minimal()
+    
+```
 
